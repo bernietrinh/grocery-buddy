@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Fridge</title>
+		<title>Shelf-Life</title>
+		<link rel="stylesheet" href="{{ URL::asset('css/styles.css') }}" type="">
 	</head>
 	<body>
 

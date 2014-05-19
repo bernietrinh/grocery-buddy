@@ -90,13 +90,23 @@ Route::group(array('before' => 'auth'), function() {
 		'uses' => 'AccountController@getLogout'
 	));
 
+Route::get('/smartlist', array(
+	'as' => 'smart-list',
+	'uses' => 'ListController@getList'
+));
+
 	//CSRF Group
 	Route::group(array('before' => 'csrf'), function() {
 		Route::post('/account/update-settings', array(
 			'as' => 'account-update-settings',
 			'uses' => 'AccountController@postUpdateSettings'
 		));
+
+		Route::post('/smartlist', array(
+			'uses' => 'ListController@postList'
+		));
 	});
+	
 });
 
 Route::get('/account/activate/{code}', array(
