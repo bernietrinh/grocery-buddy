@@ -3,14 +3,27 @@
 Class ListController extends BaseController {
 
 	public function getList() {
-		$list_items = Auth::user()->smartLists;
+
 		
+		$list_items = Auth::user()->smartLists;
+
 		foreach ($list_items as $list) {
-			$item[] = SmartList::join($list['item_id']);
+
+			$item = SmartList::joinListAndItems($list['item_id'], Auth::user()->id);
+			if ($item) {
+				$items[] = $item; 
+			} else {
+				$item = Item::find($list['item_id']);
+				$items[] = $item; 
+			}
 		}
+
+		// 		echo '<pre>'. var_dump($items) .'</pre>';
+		// die();
 		
 		return View::make('list', array(
-			'items' => $item
+			'items' => $items
+			// 'shelf' => $shelf
 		));
 	}
 
@@ -41,11 +54,11 @@ Class ListController extends BaseController {
 		} else {
 			//add to grocery list
 		}
+	}
 
-		//return $add. '<br>' . $remove . '<br>' . $item;
-
-		// $id = Auth::user()->id;
-		// return 'Item: id' . $item . 'User id:' . $id;
+	public function getAdd() {
+		$term = Input::get('term');
+		return SmartList::itemsJson($term);
 	}
 
 }

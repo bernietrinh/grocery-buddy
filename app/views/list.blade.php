@@ -4,15 +4,36 @@
 	@if(Auth::check())
 		<p>Hello, {{ Auth::user()->username }}</p>
 		<div class="container">
-			<ul>
 
+			<div class="ui-widget">
+				{{ Form::label('addtolist', 'Add to Smart List:') }}
+				<input type="text" id="addtolist">
+			</div>
+
+			<ul>
 			@foreach ($items as $item)
 				<li>
-					{{ $item[0]->name }}
+					@if(empty($item->purchase_date))
+					{{ $item->name }}
+					@else
+					<span class="more_info">{{ $item->name }}</span>
+					<ul>
+						<li>Last Purchase Date: {{ $item->purchase_date }}</li>
+						<li>Location: {{ $item->location }}</li>
+						<li>Price: {{ $item->price }}</li>
+						<li>Brand: {{ $item->brand }} </li>
+						@if(!empty($item->description))
+							<li>Description: {{ $item->description }}</li>
+						@endif
+						@if($item->sale == true)
+							<li>{{ 'On Sale' }}</li>
+						@endif
+					</ul>
+					@endif
 					<button class="toggle down">Add</button>
 
 					{{ Form::open(array('class' => 'smart_list_form')) }}
-						<input type="hidden" name="item" value="{{ $item[0]->item_id }}">
+						<input type="hidden" name="item" value="{{ $item->item_id }}">
 						{{ Form::submit('Remove Item', array('name' => 'list_remove', 'onclick' => 'return confirm("Are you sure?")')) }}
 						<div class="form">
 							<article>
@@ -103,4 +124,25 @@
 	
 	@endif
 
+@stop
+
+@section('custom_scripts')
+<script src="{{asset('js/smartList.js')}}"></script>
+<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script>
+$(document).ready(function() {
+
+	$(function() {
+		$('#addtolist').autocomplete({
+			source: "{{ URL::route('smart-list-add') }}",
+			autoFocus: true,
+			select: function(event, ui) {
+				$('#addtolist').val(ui.item.value);
+			}
+		}).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+		      return $( "<li>" ).append( "<a>" + item.label + "<br><span style='font-size: 12px'>" + item.desc + "</span></a>" ).appendTo( ul );
+	    };
+	});
+});
+</script>
 @stop

@@ -95,6 +95,12 @@ Route::get('/smartlist', array(
 	'uses' => 'ListController@getList'
 ));
 
+Route::get('/smartlistadd', array(
+	'as' => 'smart-list-add',
+	'uses' => 'ListController@getAdd'
+));
+
+
 	//CSRF Group
 	Route::group(array('before' => 'csrf'), function() {
 		Route::post('/account/update-settings', array(
@@ -105,6 +111,8 @@ Route::get('/smartlist', array(
 		Route::post('/smartlist', array(
 			'uses' => 'ListController@postList'
 		));
+
+		
 	});
 	
 });
