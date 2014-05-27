@@ -39,14 +39,17 @@ Class ListController extends BaseController {
 
 		} else if (Input::has('add_to_shelf')) {
 			//add to shelf
+			$messages = array(
+				'purchase.after' => "the purchase date must be later than today's date.",
+				'expiry.after' => "the expiry date must be later than today's date."
+			);
 			$validator = Validator::make(Input::all(), array(
-				'purchase' => 'required|after:date("Y-m-d")',
-				'expiry' => 'required|after:date("Y-m-d")',
-				'brand' => 'required|min:2',
-				'quantity' => 'required|digits_between:1,100',
-				'location' => 'required',
-				'price' => 'required'
-			));
+				'purchase' => 'required|date|after:'.date("Y-m-d", time()),
+				'expiry' => 'required|date|after:'.date("Y-m-d", time()),
+				'brand' => 'min:2',
+				'quantity' => 'required|alpha_num',
+				'price' => 'required|numeric'
+			), $messages);
 
 			if ($validator->fails()) {
 				//validation errors
@@ -55,9 +58,9 @@ Class ListController extends BaseController {
 				$place = Input::get('place');
 				$purchase = Input::get('purchase');
 				$expiry = Input::get('expiry');
-				$brand = Input::get('brand');
+				$brand = (Input::has('brand')) ? Input::get('brand') : 'N/A';
 				$quantity = Input::get('quantity');
-				$location = Input::get('location');
+				$location = (Input::has('location')) ? Input::get('location') : 'N/A';
 				$price = Input::get('price');
 				$description = Input::get('description');
 				$sale = (Input::has('sale')) ? true : false;
@@ -89,9 +92,13 @@ Class ListController extends BaseController {
 			//add to grocery list
 
 			//validation
+			$messages = array(
+				'required' => 'the item is required.',
+				'exists' => 'this item is not valid.'
+			);
 			$validator = Validator::make(Input::all(), array(
 				'addtolist' => 'required|exists:items,name'
-			));
+			), $messages);
 
 			if ($validator->fails()) {
 				//validation errors
