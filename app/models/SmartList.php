@@ -1,6 +1,7 @@
 <?php
 
 class SmartList extends Eloquent {
+	protected $fillable = array('item_id', 'user_id');
 	protected $table = 'smart_lists';
 
 	public static function joinListAndItems($item_id, $user_id) {
