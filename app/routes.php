@@ -90,17 +90,35 @@ Route::group(array('before' => 'auth'), function() {
 		'uses' => 'AccountController@getLogout'
 	));
 
-Route::get('/smartlist', array(
-	'as' => 'smart-list',
-	'uses' => 'ListController@getList'
-));
+	Route::get('/smartlist', array(
+		'as' => 'smart-list',
+		'uses' => 'ListController@getList'
+	));
 
-Route::get('/smartlistadd', array(
-	'as' => 'smart-list-add',
-	'uses' => 'ListController@getAdd'
-));
+	Route::get('/smartlistadd', array(
+		'as' => 'smart-list-add',
+		'uses' => 'ListController@getAdd'
+	));
 
+	Route::get('/shelf', array(
+			'as' => 'shelf',
+			'uses' => 'ShelfController@getShelf'
+	));
 
+	Route::get('/shelf/add', array(
+			'as' => 'shelf-add',
+			'uses' => 'ShelfController@getAddToShelf'
+	));
+
+	Route::get('/getbrand', array(
+		'as' => 'get-brand',
+		'uses' => 'ShelfController@getBrand'
+	));
+
+	Route::get('/shelf/edit', array(
+			'as' => 'shelf-edit',
+			'uses' => 'ShelfController@getEditShelf'
+	));
 	//CSRF Group
 	Route::group(array('before' => 'csrf'), function() {
 		Route::post('/account/update-settings', array(
@@ -112,6 +130,10 @@ Route::get('/smartlistadd', array(
 			'uses' => 'ListController@postList'
 		));
 
+		Route::post('/shelf/add', array(
+				'as' => 'shelf-add',
+				'uses' => 'ShelfController@postAddToShelf'
+		));
 		
 	});
 	

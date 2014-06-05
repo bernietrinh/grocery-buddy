@@ -7,13 +7,16 @@
 	</head>
 	<body>
 
+
+		@include('layout.navigation')
+		
 		@if(Session::has('global'))
 			{{ Session::get('global') }}
 		@endif
-
-		@include('layout.navigation')
 		@yield('content')
+		
 		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+		<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
 		@yield('custom_scripts')
 	</body>

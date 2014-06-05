@@ -3,8 +3,6 @@
 Class ListController extends BaseController {
 
 	public function getList() {
-
-		
 		$list_items = Auth::user()->smartLists;
 
 		foreach ($list_items as $list) {
@@ -40,14 +38,13 @@ Class ListController extends BaseController {
 		} else if (Input::has('add_to_shelf')) {
 			//add to shelf
 			$messages = array(
-				'purchase.after' => "the purchase date must be later than today's date.",
+				'purchase.before' => "the purchase date must be before today's date.",
 				'expiry.after' => "the expiry date must be later than today's date."
 			);
 			$validator = Validator::make(Input::all(), array(
-				'purchase' => 'required|date|after:'.date("Y-m-d", time()),
+				'purchase' => 'required|date|before:'.date("Y-m-d", time()),
 				'expiry' => 'required|date|after:'.date("Y-m-d", time()),
 				'brand' => 'min:2',
-				'quantity' => 'required|alpha_num',
 				'price' => 'required|numeric'
 			), $messages);
 
@@ -65,7 +62,7 @@ Class ListController extends BaseController {
 				$description = Input::get('description');
 				$sale = (Input::has('sale')) ? true : false;
 
-				//add to shelf db
+				//add to shelf table
 				$addToShelf = Shelf::create(array(
 					'item_id' => $item_id,
 					'user_id' => $user,
@@ -84,7 +81,7 @@ Class ListController extends BaseController {
 					$remove = SmartList::where('user_id', '=', $user)->where('item_id', '=', $item_id)->delete();
 
 					if($remove) {
-						return Redirect::route('smart-list')->with('global', 'item has been added to your shelf');
+						return Redirect::route('smart-list')->with('global', "item has been added to your shelf");
 					}
 				}
 			}
