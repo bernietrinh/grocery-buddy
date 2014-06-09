@@ -4,6 +4,14 @@
 	<div class="container">
 		{{ Form::open() }}
 			<div class="field">
+
+				<section>
+					<ul>
+						@foreach ($errors->all() as $error)
+						<li>{{ strtolower($error) }}</li>
+						@endforeach
+					</ul>
+				</section>
 				<div class="ui-widget">
 					{{ Form::label('item_name', 'Item:') }}
 					{{ Form::text('item_name', null, array('id' => 'item_name', 'placeholder' => 'Enter item name')) }}

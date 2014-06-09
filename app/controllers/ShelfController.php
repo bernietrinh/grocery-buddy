@@ -80,8 +80,85 @@ class ShelfController extends BaseController {
 		}
 	}
 
-	public function getEditShelf() {
-		return View::make('shelf.edit');
+	public function getDetailsShelf($id) {
+		$item = Shelf::getItem($id);
+
+		//if the item does not belong to the user, redirect back to shelf
+		if ($item->user_id != Auth::user()->id) {
+			return Redirect::route('shelf');
+		}
+
+		return View::make('shelf.details', array(
+			'item' => $item
+		));
+	}
+
+	public function getEditShelf($id) {
+		$item = Shelf::getItem($id);
+
+		if ($item->user_id != Auth::user()->id) {
+			return Redirect::route('shelf');
+		}
+		return View::make('shelf.edit', array(
+			'item' => $item
+		));
+	}
+
+	public function postEditShelf() {
+		//custom validaiton messages
+		$messages = array(
+			'purchase.before' => "the purchase date must be before today's date",
+			'expiry.after' => "the expiry date must be later than today's date"
+		);
+
+		//validation
+		$validator = Validator::make(Input::all(), array(
+			'purchase' => 'required|date:before'.date("Y-m-d", time()),
+			'expiry' => 'required|date:after'.date("Y-m-d", time()),
+			'brand' => 'min:2',
+			'price' => 'required|numeric'
+		));
+
+		//redirect with errors
+		if($validator->fails()) {
+			return Redirect::route('shelf-edit')->withErrors($validator)->withInput();
+		} else {
+			//add to shelf table
+			$item = Shelf::find(Input::get('shelf_id'));
+
+			$item->user_id = Auth::user()->id;
+			$item->item_id = Input::get('item_id');
+			$item->place = Input::get('place');
+			$item->purchase_date = Input::get('purchase');
+			$item->expiry_date = Input::get('expiry');
+			$item->brand = Input::has('brand') ? Input::get('brand') : 'N/A';
+			$item->quantity = Input::get('quantity');
+			$item->location = (Input::has('location')) ? Input::get('location') : 'N/A';
+			$item->price = Input::get('price');
+			$item->sale = (Input::has('sale')) ? true : false;
+			$item->description = (Input::has('description') ? Input::get('description') : '');
+
+			$editShelfItem = $item->save();
+
+			if ($editShelfItem) {
+				return Redirect::route('shelf')->with('global', 'item has been updated.');
+			} else {
+				return Redirect::route('shelf-edit')->with('global', 'there was a problem updating this item.');
+			}
+
+		}
+	}
+
+	public function postDeleteShelf() {
+		$item = Shelf::find(Input::get('shelf_id'));
+		$deleted = $item->delete();
+
+		if($deleted) {
+			return Redirect::route('shelf')->with('global', 'item removed.');
+		}
+
+		return Redirect::route('shelf')->with('global', 'there was a problem removing this item.');
+
 	}
 }
 

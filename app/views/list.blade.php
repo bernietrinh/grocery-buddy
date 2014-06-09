@@ -16,11 +16,13 @@
 		</div>
 		
 		<!-- Validation -->
-		<ul>
-		@foreach ($errors->all() as $error)
-		<li>{{ strtolower($error) }}</li>
-		@endforeach
-		</ul>
+		<section>
+			<ul>
+				@foreach ($errors->all() as $error)
+				<li>{{ strtolower($error) }}</li>
+				@endforeach
+			</ul>
+		</section>
 		
 		<!-- Displaying list items -->
 		<ul>

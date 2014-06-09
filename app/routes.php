@@ -39,6 +39,7 @@ Route::group(array('before' => 'guest'), function() {
 			'uses' => 'AccountController@postForgot'
 		));
 
+		//Recover Password -- POST
 		Route::post('/account/recover', array(
 			'as' => 'account-recover',
 			'uses' => 'AccountController@postRecover'
@@ -90,21 +91,25 @@ Route::group(array('before' => 'auth'), function() {
 		'uses' => 'AccountController@getLogout'
 	));
 
+	//Smart List Page -- GET
 	Route::get('/smartlist', array(
 		'as' => 'smart-list',
 		'uses' => 'ListController@getList'
 	));
 
+	//Retrieve Json for Autocomplete -- GET
 	Route::get('/smartlistadd', array(
 		'as' => 'smart-list-add',
 		'uses' => 'ListController@getAdd'
 	));
 
+	//Shelf Page -- GET
 	Route::get('/shelf', array(
 			'as' => 'shelf',
 			'uses' => 'ShelfController@getShelf'
 	));
 
+	//Add to Shelf Page -- GET
 	Route::get('/shelf/add', array(
 			'as' => 'shelf-add',
 			'uses' => 'ShelfController@getAddToShelf'
@@ -115,24 +120,44 @@ Route::group(array('before' => 'auth'), function() {
 		'uses' => 'ShelfController@getBrand'
 	));
 
-	Route::get('/shelf/edit', array(
+	//Edit Shelf Item Page -- GET
+	Route::get('/shelf/edit/{id}', array(
 			'as' => 'shelf-edit',
 			'uses' => 'ShelfController@getEditShelf'
 	));
+
+	//View Shelf Item Details Page -- GET
+	Route::get('/shelf/details/{id}', array(
+			'as' => 'shelf-details',
+			'uses' => 'ShelfController@getDetailsShelf'
+	));
+
 	//CSRF Group
 	Route::group(array('before' => 'csrf'), function() {
+		//Update Account Settings -- POST
 		Route::post('/account/update-settings', array(
 			'as' => 'account-update-settings',
 			'uses' => 'AccountController@postUpdateSettings'
 		));
 
+		//Add to Shelf from List -- POST
 		Route::post('/smartlist', array(
 			'uses' => 'ListController@postList'
 		));
 
+		//Add to Shelf -- POST
 		Route::post('/shelf/add', array(
-				'as' => 'shelf-add',
-				'uses' => 'ShelfController@postAddToShelf'
+			'as' => 'shelf-add',
+			'uses' => 'ShelfController@postAddToShelf'
+		));
+
+		//Edit Shelf item -- POST
+		Route::post('shelf/edit/{id}', array(
+			'uses' => 'ShelfController@postEditShelf'
+		));
+
+		Route::post('/shelf', array(
+				'uses' => 'ShelfController@postDeleteShelf'
 		));
 		
 	});
