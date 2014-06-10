@@ -2,6 +2,7 @@
 	<ul>
 		<li><a href="{{ URL::route('home') }}">Home</a></li>
 		@if (Auth::check())
+			<li><a href="{{ URL::route('profile') }}">Profile</a></li>
 			<li><a href="{{ URL::route('account-logout') }} ">Log Out</a></li>
 			<li><a href="{{ URL::route('account-update-settings') }} ">Change settings</a></li>
 			<li><a href="{{ URL::route('shelf') }} ">Shelf</a></li>

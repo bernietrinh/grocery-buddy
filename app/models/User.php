@@ -81,13 +81,17 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->email;
 	}
 
+	public function expiring() {
+		return $this->hasMany('Shelf')->join('items','shelf.item_id','=','items.id')->where('expiry_date', '<=', date('Y-m-d', (time() + (7 * 24 * 60 * 60))))->where('items.perishable', '=', 0)->orderBy('expiry_date')->take(10)->select('shelf.*', 'items.*', 'items.id as item_id', 'shelf.id as shelf_id')->get();
+	}
+
 	public function smartLists()
 	{
 		return $this->hasMany('SmartList');
 	}
 
 	public function shelf($place) {
-		return $this->hasMany('Shelf')->join('items','shelf.item_id','=','items.id')->where('shelf.place', '=', $place)->orderBy('expiry_date')->select('shelf.*', 'items.*', 'items.id as item_id', 'shelf.id as shelf_id')->get();
+		return $this->hasMany('Shelf')->join('items','shelf.item_id','=','items.id')->where('shelf.place', '=', $place)->orderBy('expiry_date', 'purchase_date')->select('shelf.*', 'items.*', 'items.id as item_id', 'shelf.id as shelf_id')->get();
 	}
 
 }

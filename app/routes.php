@@ -91,6 +91,17 @@ Route::group(array('before' => 'auth'), function() {
 		'uses' => 'AccountController@getLogout'
 	));
 
+	//Profile Page -- GET
+	Route::get('/profile', array(
+		'as' => 'profile',
+		'uses' => 'ProfileController@getProfile'
+	));
+
+	Route::get('/recipe/{id}', array(
+		'as' => 'recipe',
+		'uses' => 'ProfileController@getRecipe'
+	));
+
 	//Smart List Page -- GET
 	Route::get('/smartlist', array(
 		'as' => 'smart-list',
