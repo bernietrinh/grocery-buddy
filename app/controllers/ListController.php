@@ -38,11 +38,11 @@ Class ListController extends BaseController {
 		} else if (Input::has('add_to_shelf')) {
 			//add to shelf
 			$messages = array(
-				'purchase.before' => "the purchase date must be before today's date.",
+				'purchase.before' => "the purchase date must be on or before today's date.",
 				'expiry.after' => "the expiry date must be later than today's date."
 			);
 			$validator = Validator::make(Input::all(), array(
-				'purchase' => 'required|date|before:'.date("Y-m-d", time()),
+				'purchase' => 'required|date|before:'.date("Y-m-d", time() + (24 * 60 * 60)),
 				'expiry' => 'required|date|after:'.date("Y-m-d", time()),
 				'brand' => 'min:2',
 				'price' => 'required|numeric'

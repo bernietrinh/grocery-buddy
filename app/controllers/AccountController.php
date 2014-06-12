@@ -13,7 +13,7 @@ class AccountController extends BaseController {
 		));
 
 		if ($validator->fails()) {
-			return Redirect::route('account-login')->withErrors($validator)->withInput();
+			return Redirect::route('home')->withErrors($validator)->withInput();
 		} else {
 
 			$remember = (Input::has('remember')) ? true : false;
@@ -28,10 +28,10 @@ class AccountController extends BaseController {
 			//Redirect to intended page
 			return Redirect::intended('/');
 		} else {
-			return Redirect::route('account-login')->with('global', 'Username or Password is incorrect. Try again.');
+			return Redirect::route('home')->with('global', '<p class="alert alert-danger">Username or Password is incorrect. Try again.</p>');
 		}
 
-		return Redirect::route('account-login')->with('global', 'There was a problem logging in. Have you activated your account?');
+		return Redirect::route('home')->with('global', '<p class="alert alert-success">There was a problem logging in. Have you activated your account?</p>');
 	}
 
 	public function getLogout() {
@@ -63,14 +63,14 @@ class AccountController extends BaseController {
 				$user->password = Hash::make($new_password);
 
 				if($user->save()) {
-					return Redirect::route('home')->with('global', 'Settings have been updated.');
+					return Redirect::route('home')->with('global', '<p class="alert alert-success">Settings have been updated.</p>');
 				}
 			} else {
-				return Redirect::route('account-update-settings')->with('global', 'The password you entered is incorrect.');
+				return Redirect::route('account-update-settings')->with('global', '<p class="alert alert-danger">The password you entered is incorrect.</p>');
 			}
 		}
 
-		return Redirect::route('account-update-settings')->with('global', 'Your settings could not be updated.');
+		return Redirect::route('account-update-settings')->with('global', '<p class="alert alert-danger">Your settings could not be updated.</p>');
 	}
 
 	public function getForgot() {
@@ -102,17 +102,17 @@ class AccountController extends BaseController {
 						'url' => URL::route('account-recover', $code), 
 						'username' => $user->username), 
 						function($message) use ($user) {
-							$message->to($user->email, $user->username)->subject('Fridge Password Reset');
+							$message->to($user->email, $user->username)->subject('Shelf-Life Password Reset');
 						}
 					);
 					
-					return Redirect::route('home')->with('global', 'Recovery has been sent. Please check your email to reactivate your account.');
+					return Redirect::route('home')->with('global', '<p class="alert alert-success">Recovery has been sent. Please check your email to reactivate your account.</p>');
 
 				}	
 			}
 		}
 
-		return Redirect::route('account-forgot')->with('global', 'Could not request new password.');
+		return Redirect::route('account-forgot')->with('global', '<p class="alert alert-danger">Could not request new password.</p>');
 	}
 
 	public function getRecover($code) {
@@ -146,14 +146,14 @@ class AccountController extends BaseController {
 				$user->password = Hash::make($password);
 
 				if($user->save()) {
-					return Redirect::route('account-login')->with('global', 'Password have been reset.');
+					return Redirect::route('home')->with('global', '<p class="alert alert-success">Password have been reset.</p>');
 				}
 		
 			}
 
 		} 
 
-		return Redirect::route('home')->with('global', 'Your account could not be reset.');
+		return Redirect::route('home')->with('global', '<p class="alert alert-danger">Your account could not be reset.</p>');
 	}
 
 	public function getCreate() {
@@ -166,7 +166,8 @@ class AccountController extends BaseController {
 				'email' => 'required|max:255|email|unique:users',
 				'username' => 'required|max:20|min:3|unique:users',
 				'password' => 'required|min:6|max:60',
-				'password_conf' => 'required|min:6|max:60|same:password'
+				'password_conf' => 'required|min:6|max:60|same:password',
+				'city' => 'required|alpha'
 			)
 		);
 
@@ -176,6 +177,8 @@ class AccountController extends BaseController {
 			$email = Input::get('email');
 			$username = Input::get('username');
 			$password = Input::get('password');
+			$city = Input::get('city');
+			$gender = Input::get('gender');
 
 			// Activation code
 			$code = str_random(60);
@@ -185,19 +188,21 @@ class AccountController extends BaseController {
 				'username' => $username,
 				'password' => Hash::make($password),
 				'code' => $code,
-				'active' => 0
+				'active' => 0,
+				'city' => $city,
+				'gender' => $gender
 			));
 
 			if($create) {
 				//send email
 				Mail::send('emails.auth.activate', array('link' => URL::route('account-activate', $code), 'username' => $username), 
 					function($message) use ($create) {
-						$message->to($create->email, $create->username)->subject('Activate your Fridge account');
+						$message->to($create->email, $create->username)->subject('Activate your Shelf-Life account');
 					}
 				);
 
 				//redirect to home page with message
-				return Redirect::route('home')->with('global', 'Account created, please activate your account through your email.');
+				return Redirect::route('home')->with('global', '<p class="alert alert-success">Account created, please activate your account through your email.</p>');
 			}
 		}
 	}
@@ -214,11 +219,11 @@ class AccountController extends BaseController {
 			$user->save();
 
 			if($user->save()) {
-				return Redirect::route('home')->with('global', 'Activated! Sign in now');
+				return Redirect::route('home')->with('global', '<p class="alert alert-success">Activated! Sign in now</p>');
 			}
 		}
 
-		return Redirect::route('home')->with('global', 'Error activating account. Please try again later.');
+		return Redirect::route('home')->with('global', '<p class="alert alert-danger">Error activating account. Please try again later.</p>');
 
 	}
 }

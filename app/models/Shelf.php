@@ -18,21 +18,6 @@ class Shelf extends Eloquent {
 
 	protected $table = 'shelf';
 
-	public static function brandsJson($term) {
-		$brand_array = self::whereRaw("match (`brand`) against ('{$term}*' IN BOOLEAN MODE)")->get();
-		$brands = array();
-
-		foreach ($brand_array as $brand) {
-			$brands[] = array(
-				'id' => $brand->id,
-				'value' => $brand->brand,
-				'desc' => $brand->location
-			);
-		}
-
-		return json_encode($brands);
-	}
-
 	public static function getItem($id) {
 		$item = self::join('items','shelf.item_id','=','items.id')->where('shelf.id', '=', $id)->select('shelf.*', 'shelf.id as shelf_id','items.id as item_id', 'items.*')->first();
 

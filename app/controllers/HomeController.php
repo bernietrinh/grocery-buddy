@@ -16,6 +16,10 @@ class HomeController extends BaseController {
 	*/
 
 	public function home() {
+		
+		if (Auth::check()) {
+			return Redirect::route('profile');
+		}
 		return View::make('home');
 	}
 

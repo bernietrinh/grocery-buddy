@@ -1,32 +1,112 @@
 @extends('layout.main')
 
 @section('content')
-	@if(Auth::check())
-		<p>Hello, {{ Auth::user()->username }}</p>
+	
+<div class="container main" id="home">
 
-		@{{ dd($recipe) }}
-	@else
-		<p>Not signed in.</p>
+	<section>
+	<article>
+		<img src="{{ URL::asset('img/logo.png') }}" alt="Logo">
+		{{ Form::open(array('route' => 'account-login')) }}
+			
+			{{ Form::text('username', null, array('class' => 'form-control', 'placeholder' => 'Username', 'autofocus')) }}
+			@if($errors->has('username'))
+				<p class="alert alert-danger">{{ $errors->first('username') }}</p>
+			@endif
+			
+			{{ Form::password('password', array('class' => 'form-control', 'placeholder' => 'Password', 'autofocus')) }}
+			@if($errors->has('password'))
+				<p class="alert alert-danger">{{ $errors->first('password') }}</p>
+			@endif
 
+			{{ Form::label('remember', 'Remember Me')}}
+			{{ Form::checkbox('remember', 'remember') }}
+		
+		{{ Form::submit('Login', array('class' => 'btn btn-lg btn-success btn-block')) }}
+		
+		<a href="{{ URL::route('account-forgot') }}">Forgot your password?</a>
+		<a href="{{ URL::route('account-create') }}">Create an Account</a>
+		{{ Form::close() }}
 
-	@endif
+		@if(Session::has('global'))
+		{{ Session::get('global') }}
+		@endif
+	</article>
+	</section>
+
+	<section>
+	<article id="home_article_two">
+		<h3>Add groceries items to your Shelf...</h3>
+		<p>separate them from your fridge, freezer, or pantry and track information such as purchase and expiry date, price, and location.</p>
+		<img src="{{ URL::asset('img/wheat.png') }}" alt="wheat">
+		<img src="{{ URL::asset('img/fish.png') }}" alt="fish">
+		<img src="{{ URL::asset('img/beverage.png') }}" alt="beverage">
+	</section>
+	</article>
+
+	<section>
+	<article id="home_article_three">
+		<h3>Keep track of your perishable items as they appoach their expiry dates...</h3>
+		<p>with delicious recipe suggestions based on what is expiring soon.</p>
+		<div>
+			<img src="{{ URL::asset('img/meat.png') }}" alt="meat">
+			<img src="{{ URL::asset('img/veggies.png') }}" alt="veggies">
+		</div>
+		<img src="{{ URL::asset('img/fridge.png') }}" alt="fridge">
+		<img src="{{ URL::asset('img/arrow.png') }}" alt="arrow">
+	</article>
+	</section>
+
+	<section>
+	<article id="home_article_four">
+		<h3>Create Smart Shopping Lists...</h3>
+		<p>know the date, price, and location of when you last purchased your items.</p>
+		<img src="{{ URL::asset('img/cart.png') }}" alt="cart">
+	</article>
+	</section>
+
+	<section>
+	<article id="home_article_five">
+		<h3>Register Now!</h3>
+		{{ Form::open(array('route' => 'account-create')) }}
+			
+			{{ Form::text('username', null, array('class' => 'form-control', 'placeholder' => 'Username', 'autofocus')) }}
+
+			{{ Form::email('email', null, array('class' => 'form-control', 'placeholder' => 'Email', 'autofocus')) }}
+			
+			{{ Form::password('password', array('class' => 'form-control', 'placeholder' => 'Password', 'autofocus')) }}
+			
+			{{ Form::password('password_conf', array('class' => 'form-control', 'placeholder' => 'Confirm Password', 'autofocus')) }}
+
+			{{ Form::text('city', null, array('class' => 'form-control', 'placeholder' => 'City', 'autofocus')) }}
+
+			{{ Form::label('gender', 'Gender: ') }}
+			{{ Form::select('gender', array('m' => 'Male', 'f' => 'Female')) }}
+			
+			{{ Form::submit('Create Account', array('class' => 'btn btn-lg btn-success btn-block')) }}
+
+		{{ Form::close() }}
+	</article>
+	</section>
+
+</div>
+
 @stop
 
-<?php
-// // APP ID:fd5e97cf
-// // APP KEY: da1a7e087d162d6b10f28e948c8064b4
-// $url = "http://api.yummly.com/v1/api/recipes?_app_id=fd5e97cf&_app_key=da1a7e087d162d6b10f28e948c8064b4&allowedIngredient[]=blueberries";
+@section('custom_scripts')
+<script src="{{asset('js/jquery.onepage-scroll.js')}}"></script>
 
-// $ch = curl_init();
-// curl_setopt($ch, CURLOPT_URL, $url);
-// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-// $result = curl_exec($ch);
+<script>
+$(document).ready(function() {
+	$("#home").onepage_scroll({
+	   sectionContainer: "section", 
+	   easing: "ease",
+	   animationTime: 1000,
+	   pagination: false,
+	   updateURL: false
+	});
+});
 
-// $response = json_decode($result); 
-// curl_close($ch);
-// echo '<pre>'; 
-// print_r($response);
-// echo '</pre>'; 
+</script>
 
-// echo $response->matches[0]->recipeName;
-// ?>
+@stop

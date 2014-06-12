@@ -1,51 +1,48 @@
 @extends('layout.main')
 
 @section('content')
+	
+	<section class="container">
+		<h3>Register Now!</h3>
 
+		@if(Session::has('global'))
+			{{ Session::get('global') }}
+		@endif
 
-	<!-- <form action="{{ URL::route('account-create') }}" method="POST">
-		
-
-		<input type="submit" value="Create Account">
-		
-	</form> -->
-	{{ Form::open(array('route' => 'account-create')) }}
-		
-		<div class="field">
-			{{ Form::label('email', 'Email: ') }}
-			{{ Form::email('email') }}
-			@if($errors->has('email'))
-				{{ $errors->first('email') }}
-			@endif
-		</div>
-		
-		<div class="field">
-			{{ Form::label('username', 'Username: ') }}
-			{{ Form::text('username') }}
+		{{ Form::open(array('route' => 'account-create')) }}
+					
+			{{ Form::text('username', null, array('class' => 'form-control', 'placeholder' => 'Username', 'autofocus')) }}
 			@if($errors->has('username'))
-				{{ $errors->first('username') }}
+				<p class="alert alert-danger">{{ $errors->first('username') }}</p>
 			@endif
-		</div>
-		
-		<div class="field">
-			{{ Form::label('password', 'Password: ') }}
-			{{ Form::password('password') }}
+
+			{{ Form::email('email', null, array('class' => 'form-control', 'placeholder' => 'Email', 'autofocus')) }}
+			@if($errors->has('email'))
+				<p class="alert alert-danger">{{ $errors->first('email') }}</p>
+			@endif
+			
+			{{ Form::password('password', array('class' => 'form-control', 'placeholder' => 'Password', 'autofocus')) }}
 			@if($errors->has('password'))
-				{{ $errors->first('password') }}
+				<p class="alert alert-danger">{{ $errors->first('password') }}</p>
 			@endif
-		</div>
-		
-		<div class="field">
-			{{ Form::label('password_conf', 'Confirm Password: ') }}
-			{{ Form::password('password_conf') }}
+			
+			{{ Form::password('password_conf', array('class' => 'form-control', 'placeholder' => 'Confirm Password', 'autofocus')) }}
 			@if($errors->has('password_conf'))
-				{{ 'Verify your password.' }}
+				<p class="alert alert-danger">{{ 'Verify your password.' }}</p>
 			@endif
-		</div>
+
+			{{ Form::text('city', null, array('class' => 'form-control', 'placeholder' => 'City', 'autofocus')) }}
+			@if($errors->has('city'))
+				<p class="alert alert-danger">{{ $errors->first('city') }}</p>
+			@endif
+
+			{{ Form::label('gender', 'Gender: ') }}
+			{{ Form::select('gender', array('m' => 'Male', 'f' => 'Female')) }}
+			
+			{{ Form::submit('Create Account', array('class' => 'btn btn-lg btn-success btn-block')) }}
+
+		{{ Form::close() }}
 		
-		{{ Form::submit('Create Account') }}
-
-
-	{{ Form::close() }}
+	</div>
 
 @stop

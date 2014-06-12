@@ -1,8 +1,10 @@
 @extends('layout.main')
 
 @section('content')
-
-<div class="container">
+<div id="shelf_index">	
+	<main class="container">
+	</main>
+</div>
 	<br>{{ $item->name }}
 	<br>{{ $item->place }}
 	<br>{{ $item->purchase_date }}

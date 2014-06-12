@@ -40,10 +40,8 @@
 			</div>
 		
 			<div class="field">
-				<div class="ui-widget">
 				{{ Form::label('brand', 'Brand:') }}
 				{{  Form::text('brand', null, array('id' => 'brand')) }}
-				</div>
 			</div>
 			
 			<div class="field">
@@ -93,16 +91,6 @@
 			}).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
 			      return $( "<li>" ).append( "<a>" + item.label + "<br><span style='font-size: 12px'>" + item.desc + "</span></a>" ).appendTo( ul );
 		    };
-		});
-
-		$(function() {
-			$('#brand').autocomplete({
-				source: "{{ URL::route('get-brand') }}",
-				autoFocus: true,
-				select: function(event, ui) {
-					$('#brand').val(ui.item.value);
-				}
-			})
 		});
 	});
 

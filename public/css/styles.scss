@@ -1,0 +1,283 @@
+@import 'reset';
+@import 'bootstrap.min';
+@import 'bootstrap-theme.min';
+@import 'onepage-scroll.scss';
+
+@mixin white-shadow() {
+	-moz-text-shadow: 2px 2px 2px rgba(255, 255, 255, 1);
+	-o-text-shadow: 2px 2px 2px rgba(255, 255, 255, 1);
+	-webkit-text-shadow: 2px 2px 2px rgba(255, 255, 255, 1);
+	text-shadow: 2px 2px 2px rgba(255, 255, 255, 1);
+}
+
+$marker: 'Permanent Marker', cursive;
+$pt: 'PT Sans Narrow', sans-serif;
+$yanone: 'Yanone Kaffeesatz', sans-serif;
+
+$main-orange: #ff530d;
+$light-orange: #e3b34a;
+$grey-green: #9fada2;
+
+body {
+	background: $light-orange;
+	overflow: auto;
+}
+	
+//Validation
+.alert {
+	padding: 10px;
+	margin-bottom:5px;
+}
+
+
+/*_____________________Home Page________________________*/
+#home {
+	background: url('../img/background.jpg') top center no-repeat fixed;
+	background-size: 100% 100%;
+	text-align: center;
+	
+	h3 {
+		font-family: $marker;
+	}
+
+	article {
+		text-align: center;
+		max-width: 390px;
+		margin: 0 auto;
+	}
+	
+	section {
+
+		form {
+			width: 95%;
+			margin: 0 auto;
+		}
+
+		p {
+			font-size: 1.3em;
+			font-style: italic;
+			font-family: $pt;
+		}
+	}
+	
+	input:not([type=checkbox]) {
+		text-align: center;
+		// margin: .5em 0 .5em 0;
+	}
+
+	label {
+		margin: .5em 0 .5em;
+	}
+	
+	section:first-child {
+		margin: 2em auto;
+		background: url('../img/homelogo.png') top center no-repeat;
+
+		img {
+			width: 20em;
+		}
+	}
+
+	section:first-child a {
+		margin: .2em;
+		display:block;
+	}
+	
+	section:nth-child(2) {
+		background: $light-orange;
+	}
+
+
+	section:nth-child(3) {
+		background: #f69800;
+	}
+
+	section:nth-child(4) {
+		background: #ffffff;
+	}
+	
+	section:nth-child(5) {
+		background: $light-orange;
+	}
+
+	#home_article_two {
+		height: 470px;
+		background: url('../img/shelf.png') top center no-repeat;
+		background-size: 100% 90%;
+		color: #FFFFFF;
+
+		h3 {
+			font-size: 2.5em;
+			margin: .5em;
+			padding-top: 2em;
+		}
+		
+		p {
+			margin: 1.5em;
+			font-size: 1.5em;
+		}
+		img {
+			width: 30%;
+			padding: 5px;
+		}
+	}
+
+	#home_article_three {
+		div {
+			float: left;
+			margin-left: 2.5em;
+			>img {
+				display: block;
+				width: 120px;
+			}
+			>img:first-child {
+				position: relative;
+				top: 5em;	
+			}
+		}
+		
+		>img {
+			margin-right: 1.5em;
+			float: right;
+			width: 150px;
+		}
+
+		>img:last-child {
+			width: 100px;
+			position: relative;
+			top: -9em;
+			right: -2.5em;
+		}
+	}
+
+	#home_article_four {
+		h3 {
+			font-size: 2em;
+			margin-top: 2em;
+		}
+		p {
+			color: $grey-green;
+		}
+		img {
+			width: 60%;
+		}
+	}
+
+	#home_article_five {
+		h3 {
+			font-size: 3em;
+			padding-top: 1em;
+		}
+	}
+}
+
+/*_____________________Create Page________________________*/
+#create {
+	h3 {
+		font-family: $marker;
+		font-size: 3em;
+		padding: .5em;
+	}
+
+	max-width: 390px;
+	text-align: center;
+
+	input[type=text],
+	input[type=email],
+	input[type=password], {
+		text-align: center;
+	}
+
+	label {
+		margin: .5em 0 .5em;
+	}
+}
+/*_____________________Profile Nav________________________*/
+nav {
+	i {
+		margin-right: .2em;
+	}
+	
+	img {
+		width: 70px;
+	}
+	.navbar-header {
+		float: right;
+		width: 15.5em;
+
+		a:first-child {
+			font-size: 1.5em;
+			color: $main-orange;
+		}
+		
+	}
+	.navbar-nav {
+		float: left;
+	}
+}
+
+/*_____________________Profile Page________________________*/
+#profile {
+	padding: 5em 0 2em;
+	background: #e4e4e4;
+
+	.container {
+		max-width: 390px;
+		margin: 0 auto;
+	}
+}
+
+/*_____________________Shelf Index________________________*/
+#shelf_index {
+	padding: 5em 0 2em;
+	background: #e4e4e4;
+	
+	.label {
+		width: 60%;
+		padding:12px;
+
+		i {
+			margin-right: 5px;
+			vertical-align: middle;
+		}
+	}
+	
+	.row {
+		margin-top: 1.3em;
+	}
+	p {
+		display:inline;
+	}
+	form {
+		display:inline;
+	}
+	.listgroup>a:first-child {
+		margin: .5em;
+	}
+	.expires,
+	span {
+		font-size: .8em;
+		margin: .1em 0 0 4em;
+		display: block;
+	}
+	button, 
+	.edit {
+		float:right;
+	}
+
+	.edit {
+		padding-top: 4px;
+		padding-bottom: 3px;
+		margin-right: .5em;
+
+		i {
+			margin-right: 3px;
+		}
+	}
+
+	.remove {
+		background: none;
+		border: none;
+	}
+}
+

@@ -1,29 +1,32 @@
 <?php
 
 class ProfileController extends BaseController {
-
+	// APP ID:fd5e97cf
+	// APP KEY: da1a7e087d162d6b10f28e948c8064b4
 	public function getProfile() {
 		$expirings = Auth::user()->expiring();
 		$count = Auth::user()->expiring()->count();
 
-		foreach($expirings as $item) {
-			$name = $item->name;
-			$ingredient = strtolower(str_replace(' ', '+', $item->name));
-			 $url = "http://api.yummly.com/v1/api/recipes?_app_id=fd5e97cf&_app_key=da1a7e087d162d6b10f28e948c8064b4&allowedIngredient[]=".$ingredient;
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, $url);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			$result = curl_exec($ch);
+		if ($expirings) {
+			foreach($expirings as $item) {
+				$name = $item->name;
+				$ingredient = strtolower(str_replace(' ', '+', $item->name));
+				 $url = "http://api.yummly.com/v1/api/recipes?_app_id=fd5e97cf&_app_key=da1a7e087d162d6b10f28e948c8064b4&allowedIngredient[]=".$ingredient;
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_URL, $url);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				$result = curl_exec($ch);
 
-			$response = json_decode($result);
+				$response = json_decode($result);
 
 
-			$response = (array)$response;
-			$response['shelf_ingredient'] = $name;
-			$response = (object)$response;
+				$response = (array)$response;
+				$response['shelf_ingredient'] = $name;
+				$response = (object)$response;
 
-			if($response) {
-				$recipes[] = $response;
+				if($response) {
+					$recipes[] = $response;
+				}
 			}
 		}
 

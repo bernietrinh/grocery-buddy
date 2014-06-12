@@ -15,11 +15,6 @@ class ShelfController extends BaseController {
 		));
 	}
 
-	public function getBrand() {
-		$term = Input::get('brand');
-		return Shelf::brandsJson($term);
-	}
-
 	public function getAddToShelf() {
 		return View::make('shelf.add');
 	}
@@ -29,14 +24,14 @@ class ShelfController extends BaseController {
 		$messages = array(
 			'item_name.required' => 'the item is required.',
 			'item_name.exists' => 'the item is not valid',
-			'purchase.before' => "the purchase date must be before today's date",
+			'purchase.before' => "the purchase date must be on or before today's date",
 			'expiry.after' => "the expiry date must be later than today's date"
 		);
 
 		//validation
 		$validator = Validator::make(Input::all(), array(
 			'item_name' => 'required|exists:items,name',
-			'purchase' => 'required|date:before'.date("Y-m-d", time()),
+			'purchase' => 'required|date:before'.date("Y-m-d", time()+ (24 * 60 * 60)),
 			'expiry' => 'required|date:after'.date("Y-m-d", time()),
 			'brand' => 'min:2',
 			'price' => 'required|numeric'
@@ -75,7 +70,7 @@ class ShelfController extends BaseController {
 			));
 
 			if ($addToShelf) {
-				return Redirect::route('shelf')->with('global', 'item has been added to your shelf');
+				return Redirect::route('shelf')->with('global', '<p class="alert alert-success">item has been added to your shelf</p>');
 			}
 		}
 	}
@@ -143,7 +138,7 @@ class ShelfController extends BaseController {
 			if ($editShelfItem) {
 				return Redirect::route('shelf')->with('global', 'item has been updated.');
 			} else {
-				return Redirect::route('shelf-edit')->with('global', 'there was a problem updating this item.');
+				return Redirect::route('shelf-edit')->with('global', '<p class="alert alert-success">there was a problem updating this item.</p>');
 			}
 
 		}
@@ -154,10 +149,10 @@ class ShelfController extends BaseController {
 		$deleted = $item->delete();
 
 		if($deleted) {
-			return Redirect::route('shelf')->with('global', 'item removed.');
+			return Redirect::route('shelf')->with('global', '<p class="alert alert-success">item removed.</p>');
 		}
 
-		return Redirect::route('shelf')->with('global', 'there was a problem removing this item.');
+		return Redirect::route('shelf')->with('global', '<p class="alert alert-danger">there was a problem removing this item.</p>');
 
 	}
 }
