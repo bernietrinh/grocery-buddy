@@ -32,7 +32,6 @@ class ProfileController extends BaseController {
 			}
 		}
 
-		$recipes = 0;
 
 		return View::make('profile', array(
 			'recipes' => $recipes,

@@ -42,7 +42,7 @@
 					<h3 class="panel-title">Some delicious recipes to make...</h3>
 				</div>
 				<div class="panel-body">
-					@if ($count > 0)
+					@if ($count > 0 && $recipes)
 					<ul>
 						@foreach ($recipes as $recipe) 
 							@if ($count == 1)

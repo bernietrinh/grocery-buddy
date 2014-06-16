@@ -2,11 +2,11 @@
 
 @section ('custom_css')
 
-@stop
 <link rel="stylesheet" href="{{ URL::asset('css/onepage-scroll.css') }}" type="text/css">
+@stop
 @section('content')
 	
-<div class="container main" id="home">
+<div class="container" id="home">
 
 	<section>
 	<article>
