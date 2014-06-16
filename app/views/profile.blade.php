@@ -17,6 +17,8 @@
 							<th>Expiring</td>
 						</thead>
 						<tbody>
+							
+					@if ($count > 0)
 					@foreach ($expirings as $expiring)
 						<tr>
 							<td>{{ $expiring->name }}</td>
@@ -24,6 +26,9 @@
 							<td>{{ date("F j", strtotime($expiring->expiry_date)) }}</td>
 						</tr>
 					@endforeach
+					@else
+					<p class="none">You do not have any items expiring this week.</tr>
+					@endif
 						</tbody>
 					</table>
 
@@ -37,8 +42,8 @@
 					<h3 class="panel-title">Some delicious recipes to make...</h3>
 				</div>
 				<div class="panel-body">
+					@if ($count > 0)
 					<ul>
-					@if ($recipes)
 						@foreach ($recipes as $recipe) 
 							@if ($count == 1)
 								<li><a href="{{ URL::route('recipe', $recipe->matches[0]->id) }}">{{ $recipe->matches[0]->recipeName }}</a> with <span>{{ $recipe->shelf_ingredient }}</span></li>
@@ -61,8 +66,12 @@
 								<li><a href="{{ URL::route('recipe', $recipe->matches[0]->id) }}">{{ $recipe->matches[0]->recipeName }}</a> with <span>{{ $recipe->shelf_ingredient }}</span></li> 
 							@endif
 						@endforeach
-					@endif
 					</ul>
+					<p>{{ $recipes[0]->attribution->html }}</p>
+
+					@else 
+					<p class="none">None</p>
+					@endif
 				</div>
 			</div>
 		</div>

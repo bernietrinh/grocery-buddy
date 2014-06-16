@@ -7,28 +7,32 @@ class ProfileController extends BaseController {
 		$expirings = Auth::user()->expiring();
 		$count = Auth::user()->expiring()->count();
 
-		if ($expirings) {
-			foreach($expirings as $item) {
-				$name = $item->name;
-				$ingredient = strtolower(str_replace(' ', '+', $item->name));
-				 $url = "http://api.yummly.com/v1/api/recipes?_app_id=fd5e97cf&_app_key=da1a7e087d162d6b10f28e948c8064b4&allowedIngredient[]=".$ingredient;
-				$ch = curl_init();
-				curl_setopt($ch, CURLOPT_URL, $url);
-				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-				$result = curl_exec($ch);
+		if ($count > 0) {
+			if ($expirings) {
+				foreach($expirings as $item) {
+					$name = $item->name;
+					$ingredient = strtolower(str_replace(' ', '+', $item->name));
+					 $url = "http://api.yummly.com/v1/api/recipes?_app_id=fd5e97cf&_app_key=da1a7e087d162d6b10f28e948c8064b4&allowedIngredient[]=".$ingredient;
+					$ch = curl_init();
+					curl_setopt($ch, CURLOPT_URL, $url);
+					curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+					$result = curl_exec($ch);
 
-				$response = json_decode($result);
+					$response = json_decode($result);
 
 
-				$response = (array)$response;
-				$response['shelf_ingredient'] = $name;
-				$response = (object)$response;
+					$response = (array)$response;
+					$response['shelf_ingredient'] = $name;
+					$response = (object)$response;
 
-				if($response) {
-					$recipes[] = $response;
+					if($response) {
+						$recipes[] = $response;
+					}
 				}
 			}
 		}
+
+		$recipes = 0;
 
 		return View::make('profile', array(
 			'recipes' => $recipes,
@@ -52,5 +56,5 @@ class ProfileController extends BaseController {
 		));
 	}
 }
-//http://api.yummly.com/v1/api/recipe/Quick-sriracha-beef-lettuce-wraps-309227?_app_id=fd5e97cf&_app_key=da1a7e087d162d6b10f28e948c8064b4
+
 ?>

@@ -15,12 +15,15 @@ Class ListController extends BaseController {
 
 		}
 
-		foreach($items as $list) {
-			json_decode($list);
-			// echo '<pre>';
-			// echo $list->name;
-			// echo '</pre>';
+		if (Auth::user()->smartLists->count() > 0) {
+			foreach($items as $list) {
+				json_decode($list);
+			}
+		} else {
+			$items = null;	
 		}
+
+
 
 		return View::make('list', array(
 			'items' => $items

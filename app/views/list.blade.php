@@ -46,6 +46,7 @@
 			<h4>To Buy...</h4>
 		</div>
 		<ul class="list-group">
+		@if ($items)
 			@foreach ($items as $item)
 			<li class="list-group-item">
 				<header>
@@ -145,6 +146,10 @@
 				</section>
 			</li>
 		@endforeach
+		@else 
+		<li class="list-group-item">Add items to your list.</li>
+		
+		@endif
 		</ul> <!--#accordion-->
 			
 	</main>

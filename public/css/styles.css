@@ -6736,6 +6736,14 @@ nav .navbar-nav {
   margin: 0 .1em 0 .1em;
   color: #ff530d;
 }
+#profile p {
+  text-align: right;
+}
+#profile .none {
+  text-align: center;
+  font-style: italic;
+  font-weight: normal;
+}
 
 /*_____________________Update Settings_____________________*/
 #update-settings {
@@ -6768,6 +6776,52 @@ nav .navbar-nav {
 }
 #update-settings form label {
   margin-top: .5em;
+}
+
+/*_____________________Recipe Page________________________*/
+#recipe {
+  padding: 5em 0 2em;
+}
+#recipe .container {
+  max-width: 390px;
+  margin: 0 auto;
+  padding: 1em;
+  background: #FFFFFF;
+  -webkit-box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, 0.7);
+  -moz-box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, 0.7);
+  box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, 0.7);
+}
+#recipe .container img {
+  max-width: 370px;
+}
+#recipe .container h2 {
+  text-align: center;
+}
+#recipe .container h2, #recipe .container h3 {
+  font-family: "Permanent Marker", cursive;
+}
+#recipe .container .fa-star {
+  color: #FFE800;
+}
+#recipe .container span {
+  font-weight: bold;
+}
+#recipe .container .rating {
+  font-weight: bold;
+  text-align: center;
+}
+#recipe .container ul {
+  margin-left: 1em;
+}
+#recipe .container li {
+  list-style: square;
+}
+#recipe .container a {
+  display: block;
+}
+#recipe .container p:last-child {
+  text-align: center;
+  margin-top: 1.5em;
 }
 
 /*_____________________Shelf Index________________________*/

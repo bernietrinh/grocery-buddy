@@ -289,6 +289,16 @@ nav {
 		}
 	}
 
+	p {
+		text-align: right;
+	}
+
+	.none {
+		text-align: center;
+		font-style: italic;
+		font-weight: normal;
+	}
+
 
 
 }
@@ -326,6 +336,59 @@ nav {
 		}
 		label {
 			margin-top: .5em;
+		}
+	}
+}
+/*_____________________Recipe Page________________________*/
+#recipe {
+	padding: 5em 0 2em;
+
+	.container {
+		max-width: 390px;
+		margin: 0 auto;
+		padding: 1em;
+		background: #FFFFFF;
+		@include box-shadow(.7);
+
+		img {
+			max-width: 370px;
+		}
+
+		h2 {
+			text-align: center;
+		}
+
+		h2, h3 {
+			font-family: $marker;
+		}
+
+		.fa-star {
+			color: #FFE800;
+		}
+
+		span {
+			font-weight: bold;
+		}
+		.rating {
+			font-weight: bold;
+			text-align: center;
+		}
+
+		ul {
+			margin-left: 1em;
+		}
+
+		li {
+			list-style: square;
+		}
+
+		a {
+			display: block;
+		}
+
+		p:last-child {
+			text-align: center;
+			margin-top: 1.5em;
 		}
 	}
 }
