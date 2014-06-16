@@ -6535,80 +6535,8 @@ button.close {
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
-body, html {
-  margin: 0;
-  overflow: hidden;
-  -webkit-transition: opacity 400ms;
-  -moz-transition: opacity 400ms;
-  transition: opacity 400ms;
-}
-
-body, .onepage-wrapper, html {
-  display: block;
-  position: static;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.onepage-wrapper {
-  width: 100%;
-  height: 100%;
-  display: block;
-  position: relative;
-  padding: 0;
-}
-
-.onepage-wrapper .section {
-  width: 100%;
-  height: 100%;
-}
-
-.onepage-pagination {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  z-index: 5;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.onepage-pagination li {
-  padding: 0;
-  text-align: center;
-}
-
-.onepage-pagination li a {
-  padding: 10px;
-  width: 4px;
-  height: 4px;
-  display: block;
-}
-
-.onepage-pagination li a:before {
-  content: '';
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: rgba(0, 0, 0, 0.85);
-  border-radius: 10px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-}
-
-.onepage-pagination li a.active:before {
-  width: 10px;
-  height: 10px;
-  background: none;
-  border: 1px solid black;
-  margin-top: -4px;
-  left: 8px;
-}
-
 body {
-  background: #e3b34a;
-  overflow: auto;
+  background: #ecdfc3;
 }
 
 .alert {
@@ -6618,9 +6546,11 @@ body {
 
 /*_____________________Home Page________________________*/
 #home {
+  padding: 0;
   background: url("../img/background.jpg") top center no-repeat fixed;
   background-size: 100% 100%;
   text-align: center;
+  width: 100%;
 }
 #home h3 {
   font-family: "Permanent Marker", cursive;
@@ -6639,9 +6569,6 @@ body {
   font-style: italic;
   font-family: "PT Sans Narrow", sans-serif;
 }
-#home input:not([type=checkbox]) {
-  text-align: center;
-}
 #home label {
   margin: .5em 0 .5em;
 }
@@ -6650,7 +6577,16 @@ body {
   background: url("../img/homelogo.png") top center no-repeat;
 }
 #home section:first-child img {
-  width: 20em;
+  width: 15em;
+}
+#home section:first-child input[type=submit] {
+  display: inline;
+}
+#home section:first-child i {
+  display: inline;
+}
+#home section:first-child button {
+  width: 80%;
 }
 #home section:first-child a {
   margin: .2em;
@@ -6724,16 +6660,23 @@ body {
   font-size: 3em;
   padding-top: 1em;
 }
+#home #home_article_five button {
+  margin-top: 1em;
+}
 
 /*_____________________Create Page________________________*/
 #create {
-  max-width: 390px;
-  text-align: center;
+  background: #e3b34a;
 }
 #create h3 {
   font-family: "Permanent Marker", cursive;
   font-size: 3em;
   padding: .5em;
+  text-align: center;
+}
+#create .container {
+  max-width: 390px;
+  margin: 0 auto;
 }
 #create input[type=text],
 #create input[type=email],
@@ -6742,6 +6685,9 @@ body {
 }
 #create label {
   margin: .5em 0 .5em;
+}
+#create button {
+  margin-top: 1em;
 }
 
 /*_____________________Profile Nav________________________*/
@@ -6765,18 +6711,80 @@ nav .navbar-nav {
 
 /*_____________________Profile Page________________________*/
 #profile {
-  padding: 5em 0 2em;
-  background: #e4e4e4;
+  padding: 5em 3em 2em 3em;
 }
-#profile .container {
+#profile h2 {
+  font-family: "Permanent Marker", cursive;
+}
+#profile table thead {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+#profile table tr td:first-child {
+  font-weight: bold;
+}
+#profile ul li {
+  margin-top: 0.3em;
+}
+#profile ul li span {
+  color: #e3b34a;
+  font-style: italic;
+}
+#profile ul a {
+  font-family: "Rock Salt", cursive;
+  font-size: 1em;
+  margin: 0 .1em 0 .1em;
+  color: #ff530d;
+}
+
+/*_____________________Update Settings_____________________*/
+#update-settings {
+  padding: 5em 0 2em;
+  background: #e3b34a;
+}
+#update-settings .container {
   max-width: 390px;
   margin: 0 auto;
+}
+#update-settings form {
+  width: 300px;
+  margin: 0 auto;
+  background: #FFFFFF;
+  -webkit-box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, 0.7);
+  -moz-box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, 0.7);
+  box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, 0.7);
+  padding: 1.5em;
+}
+#update-settings form h3 {
+  text-align: center;
+  font-family: "Permanent Marker", cursive;
+}
+#update-settings form i {
+  vertical-align: middle;
+}
+#update-settings form button {
+  width: 50%;
+  margin: 1em auto;
+}
+#update-settings form label {
+  margin-top: .5em;
 }
 
 /*_____________________Shelf Index________________________*/
 #shelf_index {
   padding: 5em 0 2em;
-  background: #e4e4e4;
+}
+#shelf_index .panel-heading {
+  padding-left: 2em;
+}
+#shelf_index .panel-heading img {
+  height: 30px;
+  margin-right: .5em;
+  display: inline;
+  vertical-align: middle;
+}
+#shelf_index .panel-heading h3 {
+  display: inline;
 }
 #shelf_index .label {
   width: 60%;
@@ -6798,25 +6806,235 @@ nav .navbar-nav {
 #shelf_index .listgroup > a:first-child {
   margin: .5em;
 }
-#shelf_index .expires,
-#shelf_index span {
+#shelf_index .expires {
   font-size: .8em;
-  margin: .1em 0 0 4em;
+  margin: .1em 0 0 2em;
   display: block;
 }
 #shelf_index button,
 #shelf_index .edit {
   float: right;
 }
-#shelf_index .edit {
+
+input[type=submit] {
+  background: none;
+  border: none;
+}
+
+.edit {
   padding-top: 4px;
   padding-bottom: 3px;
   margin-right: .5em;
 }
-#shelf_index .edit i {
+.edit i {
   margin-right: 3px;
 }
-#shelf_index .remove {
-  background: none;
-  border: none;
+
+/*_____________________Shelf Details________________________*/
+#shelf_details {
+  padding: 5em 0 2em;
+}
+#shelf_details .panel-heading {
+  padding-left: 2em;
+}
+#shelf_details .panel-heading img {
+  height: 30px;
+  margin-right: .5em;
+  display: inline;
+  vertical-align: middle;
+}
+#shelf_details .panel-heading h3 {
+  display: inline;
+  margin-right: .5em;
+}
+#shelf_details .panel-body p:first-child {
+  text-align: center;
+  font-size: 1.3em;
+  font-weight: bold;
+}
+#shelf_details .panel-body p:nth-child(2) {
+  font-family: "PT Sans Narrow", sans-serif;
+  font-size: 1.2em;
+  color: #e3b34a;
+}
+#shelf_details .panel-body span {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+#shelf_details .panel-body li {
+  font-style: italic;
+  margin-left: 1em;
+}
+#shelf_details .container {
+  max-width: 500px;
+  width: 95%;
+  margin: 0 auto;
+}
+#shelf_details .panel-footer {
+  background: #FFFFFF;
+}
+#shelf_details .panel-footer a,
+#shelf_details .panel-footer button {
+  float: right;
+  margin-right: .5em;
+}
+
+/*_____________________Shelf Add________________________*/
+#shelf_add, #shelf_edit {
+  padding: 5em 0 2em;
+  background: #e3b34a;
+}
+#shelf_add h3, #shelf_edit h3 {
+  text-align: center;
+  font-family: "Permanent Marker", cursive;
+  font-size: 1.5em;
+}
+#shelf_add .container, #shelf_edit .container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+#shelf_add form, #shelf_edit form {
+  background: #FFFFFF;
+  padding: 2em;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  margin: 0 auto;
+  width: 95%;
+  -webkit-box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, 0.7);
+  -moz-box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, 0.7);
+  box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, 0.7);
+}
+#shelf_add .input-group, #shelf_edit .input-group {
+  margin: 0 auto;
+  width: 90%;
+}
+#shelf_add .form-group, #shelf_edit .form-group {
+  text-align: left;
+}
+#shelf_add label[for=expiry],
+#shelf_add label[for=purchase], #shelf_edit label[for=expiry],
+#shelf_edit label[for=purchase] {
+  margin-left: 1.3em;
+}
+#shelf_add button, #shelf_edit button {
+  width: 100%;
+}
+#shelf_add button i, #shelf_edit button i {
+  vertical-align: middle;
+}
+#shelf_add label, #shelf_edit label {
+  margin-top: .7em;
+}
+#shelf_add select:last-child, #shelf_edit select:last-child {
+  margin-bottom: 1em;
+}
+
+.center {
+  text-align: center;
+}
+
+.ui-widget {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.ui-widget input {
+  font-size: 14px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/*_____________________List________________________*/
+#list {
+  padding: 5em 0 2em;
+  max-width: 500px;
+  margin: 0 auto;
+}
+#list .container {
+  max-width: 390px;
+  margin: 0 auto;
+}
+#list .container h3 {
+  font-family: "Permanent Marker", cursive;
+}
+#list .ui-widget {
+  width: 370px;
+  margin: 0 auto;
+  background: #e3b34a;
+  padding: 1em;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, 0.6);
+  -moz-box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, 0.6);
+  box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, 0.6);
+}
+#list form:first-child .addtolist {
+  float: left;
+  width: 260px;
+}
+#list form:first-child > i {
+  float: right;
+}
+#list #validation {
+  margin-top: 1.5em;
+}
+#list #validation li {
+  color: #a94442;
+  font-style: italic;
+}
+#list #panel-title {
+  background: #efefef;
+  margin-top: 1.5em;
+  padding: 1em;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  text-align: center;
+}
+#list i {
+  vertical-align: middle;
+}
+#list .toggle {
+  cursor: pointer;
+}
+#list .list-group-item header button {
+  margin-right: .2em;
+}
+#list .list-group-item header .remove {
+  float: right;
+}
+#list .list-group-item header h4 {
+  font-size: 1em;
+}
+#list .list-group-item header button,
+#list .list-group-item header h4,
+#list .list-group-item header form {
+  display: inline;
+}
+#list .list-group-item header h4:not(.toggle) {
+  margin-left: 1em;
+}
+#list article ul {
+  margin: 1em 0 0 0;
+}
+#list article li {
+  font-size: .9em;
+  margin-left: 4em;
+  font-style: italic;
+}
+#list article li span {
+  font-weight: bold;
+  color: #a94442;
+}
+#list section form button {
+  width: 80%;
+  margin: 0 auto;
+}
+#list section form label {
+  margin-top: .7em;
+}
+#list section form select:last-child {
+  margin-bottom: 1em;
 }

@@ -108,6 +108,7 @@ Route::group(array('before' => 'auth'), function() {
 		'uses' => 'ListController@getList'
 	));
 
+
 	//Retrieve Json for Autocomplete -- GET
 	Route::get('/smartlistadd', array(
 		'as' => 'smart-list-add',
@@ -131,16 +132,25 @@ Route::group(array('before' => 'auth'), function() {
 		'uses' => 'ShelfController@getBrand'
 	));
 
+	//If no parameter specified -- GET
+	Route::get('/shelf/edit/', function() {
+		return Redirect::route('shelf');
+	});
+
 	//Edit Shelf Item Page -- GET
 	Route::get('/shelf/edit/{id}', array(
-			'as' => 'shelf-edit',
-			'uses' => 'ShelfController@getEditShelf'
+		'as' => 'shelf-edit',
+		'uses' => 'ShelfController@getEditShelf'
 	));
+
+	Route::get('/shelf/details/', function() {
+		return Redirect::route('shelf');
+	});
 
 	//View Shelf Item Details Page -- GET
 	Route::get('/shelf/details/{id}', array(
-			'as' => 'shelf-details',
-			'uses' => 'ShelfController@getDetailsShelf'
+		'as' => 'shelf-details',
+		'uses' => 'ShelfController@getDetailsShelf'
 	));
 
 	//CSRF Group
@@ -156,6 +166,11 @@ Route::group(array('before' => 'auth'), function() {
 			'uses' => 'ListController@postList'
 		));
 
+		Route::post('/smartlist/delete/', array(
+			'as' => 'smart-list-delete',
+			'uses' => 'ListController@postDelete'
+		));
+		
 		//Add to Shelf -- POST
 		Route::post('/shelf/add', array(
 			'as' => 'shelf-add',
@@ -168,6 +183,7 @@ Route::group(array('before' => 'auth'), function() {
 		));
 
 		Route::post('/shelf', array(
+				'as' => 'shelf-delete',
 				'uses' => 'ShelfController@postDeleteShelf'
 		));
 		

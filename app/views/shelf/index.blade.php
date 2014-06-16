@@ -4,7 +4,7 @@
 	<div id="shelf_index">	
 		<main class="container">
 			
-			<a class="label label-info" href="{{ URL::route('shelf-add') }} "><i class="fa fa-plus-circle fa-2x"></i>Add new item to shelf</a>
+			<a class="label label-info" href="{{ URL::route('shelf-add') }} "><i class="fa fa-plus-circle fa-2x"></i>Add new item to Shelf</a>
 
 			@if(Session::has('global'))
 			{{ Session::get('global') }}
@@ -14,6 +14,7 @@
 		        <div class="col-sm-12 col-md-6 col-lg-4">
 		          <div class="panel panel-success">
 		            <div class="panel-heading">
+		            	<img src="{{ URL::asset('img/fridge-icon.png') }}" alt="fridge">
 		              <h3 class="panel-title">Fridge</h3>
 		            </div>
 		            <div class="panel-body">
@@ -40,14 +41,15 @@
 			            		@endif
 			            			<p>
 				            			<a href="{{ URL::route('shelf-details', $fridge->shelf_id) }}">{{ $fridge->name }}</a>
+				            			<span class="badge">{{ $fridge->quantity }}</span>
 				            			{{ Form::open() }}
 				            				{{ Form::hidden('shelf_id', $fridge->shelf_id) }}
 				            				<button class="btn btn-danger btn-xs"><i class="fa fa-trash-o fa-sm"></i>{{ Form::submit('Delete', array('class' => 'remove')) }}</button>
 			            				{{ Form::close() }}
 			            				<a class="edit btn btn-warning btn-xs" href="{{URL::route('shelf-edit', $fridge->shelf_id)}}"><i class="fa fa-edit fa-sm"></i>Edit</a>
-										<span>Quantity: {{ $fridge->quantity }}</span>
+										@if($fridge->expiry_date != null)
 										<span class="expires">Expires: {{ date("F j, Y", strtotime($fridge->expiry_date)) }}</span>
-
+										@endif
 			            			</p>
 	            				
 			            		</li>
@@ -59,6 +61,7 @@
 		        <div class="col-sm-12 col-md-6 col-lg-4">
 		          <div class="panel panel-danger">
 		            <div class="panel-heading">
+		            	<img src="{{ URL::asset('img/freezer.png') }}" alt="freezer">
 		              <h3 class="panel-title">Freezer</h3>
 		            </div>
 		            <div class="panel-body">
@@ -84,13 +87,15 @@
     		            		@endif
     		            			<p>
     			            			<a href="{{ URL::route('shelf-details', $freezer->shelf_id) }}">{{ $freezer->name }}</a>
+    			            			<span class="badge">{{ $freezer->quantity }}</span>
     			            			{{ Form::open() }}
     			            				{{ Form::hidden('shelf_id', $freezer->shelf_id) }}
     			            				<button class="btn btn-danger btn-xs"><i class="fa fa-trash-o fa-sm"></i>{{ Form::submit('Delete', array('class' => 'remove')) }}</button>
     		            				{{ Form::close() }}
-    		            				<a class="edit btn btn-warning btn-xs" href="{{URL::route('shelf-edit', $fridge->shelf_id)}}"><i class="fa fa-edit fa-sm"></i>Edit</a>
-    									<span>Quantity: {{ $freezer->quantity }}</span>
+    		            				<a class="edit btn btn-warning btn-xs" href="{{URL::route('shelf-edit', $freezer->shelf_id)}}"><i class="fa fa-edit fa-sm"></i>Edit</a>
+    									@if($freezer->expiry_date != null)
     									<span class="expires">Expires: {{ date("F j, Y", strtotime($freezer->expiry_date)) }}</span>
+    									@endif
 
     		            			</p>
     	           				
@@ -103,14 +108,15 @@
 		        <div class="col-sm-12 col-md-6 col-lg-4">
 		          <div class="panel panel-warning">
 		            <div class="panel-heading">
-		              <h3 class="panel-title">Pantry</h3>
+		            	<img src="{{ URL::asset('img/pantry.png') }}" alt="pantry">
+						<h3 class="panel-title">Pantry</h3>
 		            </div>
 		            <div class="panel-body">
     	            	<ul class="listgroup">
-							@endif
     	            		@foreach ($pantry_items as $pantry)
     	            			<li class="list-group-item">
     		            		@if ($pantry->category == "Dairy")
+	    		            		<img src="{{ URL::asset('img/cat/dairy-icon.png') }}" alt="dairy">
     		            		@elseif($pantry->category == "Vegetables")
     		            			<img src="{{ URL::asset('img/cat/vegetables-icon.png') }}" alt="veggies">
     		            		@elseif($pantry->category == "Fruit")
@@ -126,18 +132,20 @@
     		            			<img src="{{ URL::asset('img/cat/seafood-icon.png') }}" alt="seafood">
     		            		@elseif($pantry->category == "Other")
     		            		@endif
-    		            			<p>
-    			            			<a href="{{ URL::route('shelf-details', $pantry->shelf_id) }}">{{ $pantry->name }}</a>
-    			            			{{ Form::open() }}
-    			            				{{ Form::hidden('shelf_id', $pantry->shelf_id) }}
-    			            				<button class="btn btn-danger btn-xs"><i class="fa fa-trash-o fa-sm"></i>{{ Form::submit('Delete', array('class' => 'remove')) }}</button>
-    		            				{{ Form::close() }}
-    		            				<a class="edit btn btn-warning btn-xs" href="{{URL::route('shelf-edit', $fridge->shelf_id)}}"><i class="fa fa-edit fa-sm"></i>Edit</a>
-    									<span>Quantity: {{ $pantry->quantity }}</span>
-    									<span class="expires">Expires: {{ date("F j, Y", strtotime($pantry->expiry_date)) }}</span>
-    		            			</p>
-    		            		</li>
-    	            		@endforeach
+		            			<p>
+			            			<a href="{{ URL::route('shelf-details', $pantry->shelf_id) }}">{{ $pantry->name }}</a>
+			            			<span class="badge">{{ $pantry->quantity }}</span>
+			            			{{ Form::open() }}
+			            				{{ Form::hidden('shelf_id', $pantry->shelf_id) }}
+			            				<button class="btn btn-danger btn-xs"><i class="fa fa-trash-o fa-sm"></i>{{ Form::submit('Delete', array('class' => 'remove')) }}</button>
+		            				{{ Form::close() }}
+		            				<a class="edit btn btn-warning btn-xs" href="{{URL::route('shelf-edit', $pantry->shelf_id)}}"><i class="fa fa-edit fa-sm"></i>Edit</a>
+									@if($pantry->expiry_date != null)
+									<span class="expires">Expires: {{ date("F j, Y", strtotime($pantry->expiry_date)) }}</span>
+									@endif
+		            			</p>
+		            		</li>
+	            		@endforeach
     	            	</ul>
 		            </div>
 		          </div>

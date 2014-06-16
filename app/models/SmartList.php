@@ -4,14 +4,6 @@ class SmartList extends Eloquent {
 	protected $fillable = array('item_id', 'user_id');
 	protected $table = 'smart_lists';
 
-	public static function joinListAndItems($item_id, $user_id) {
-		$grocery_items = DB::table('smart_lists')->join('items', 'items.id', '=', 'smart_lists.item_id')->join('shelf','shelf.item_id','=','smart_lists.item_id')->where('items.id', '=', $item_id)->where('shelf.user_id', '=', $user_id)->orderBy('purchase_date', 'desc')->first();
-
-		return $grocery_items;
-
-
-	}
-
 	public static function getShelfItems($user_id, $item_id) {
 		$shelf_items = Shelf::where('user_id', '=', $user_id)->where('item_id', '=', $item_id);
 		return $shelf_items;

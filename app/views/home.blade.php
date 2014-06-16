@@ -1,5 +1,9 @@
 @extends('layout.main')
 
+@section ('custom_css')
+
+@stop
+<link rel="stylesheet" href="{{ URL::asset('css/onepage-scroll.css') }}" type="text/css">
 @section('content')
 	
 <div class="container main" id="home">
@@ -9,12 +13,18 @@
 		<img src="{{ URL::asset('img/logo.png') }}" alt="Logo">
 		{{ Form::open(array('route' => 'account-login')) }}
 			
-			{{ Form::text('username', null, array('class' => 'form-control', 'placeholder' => 'Username', 'autofocus')) }}
+			<div class="input-group margin-bottom-sm">
+				<span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+				{{ Form::text('username', null, array('class' => 'form-control', 'placeholder' => 'Username', 'autofocus')) }}
+			</div>
 			@if($errors->has('username'))
 				<p class="alert alert-danger">{{ $errors->first('username') }}</p>
 			@endif
 			
-			{{ Form::password('password', array('class' => 'form-control', 'placeholder' => 'Password', 'autofocus')) }}
+			<div class="input-group margin-bottom-sm">
+				<span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+				{{ Form::password('password', array('class' => 'form-control', 'placeholder' => 'Password', 'autofocus')) }}
+			</div>
 			@if($errors->has('password'))
 				<p class="alert alert-danger">{{ $errors->first('password') }}</p>
 			@endif
@@ -22,7 +32,12 @@
 			{{ Form::label('remember', 'Remember Me')}}
 			{{ Form::checkbox('remember', 'remember') }}
 		
-		{{ Form::submit('Login', array('class' => 'btn btn-lg btn-success btn-block')) }}
+		<div class="center">
+			<button class="btn btn-success btn-md">
+				<i class="fa fa-cutlery"></i>
+				{{ Form::submit('Login') }}
+			</button>
+		</div>
 		
 		<a href="{{ URL::route('account-forgot') }}">Forgot your password?</a>
 		<a href="{{ URL::route('account-create') }}">Create an Account</a>
@@ -70,20 +85,42 @@
 		<h3>Register Now!</h3>
 		{{ Form::open(array('route' => 'account-create')) }}
 			
-			{{ Form::text('username', null, array('class' => 'form-control', 'placeholder' => 'Username', 'autofocus')) }}
+			<div class="input-group margin-bottom-sm">
+				<span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+				{{ Form::text('username', null, array('class' => 'form-control', 'placeholder' => 'Username', 'autofocus')) }}
+			</div>
 
-			{{ Form::email('email', null, array('class' => 'form-control', 'placeholder' => 'Email', 'autofocus')) }}
+			<div class="input-group margin-bottom-sm">
+				<span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+				{{ Form::email('email', null, array('class' => 'form-control', 'placeholder' => 'Email', 'autofocus')) }}
+			</div>
 			
-			{{ Form::password('password', array('class' => 'form-control', 'placeholder' => 'Password', 'autofocus')) }}
+			<div class="input-group margin-bottom-sm">
+				<span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+				{{ Form::password('password', array('class' => 'form-control', 'placeholder' => 'Password', 'autofocus')) }}
+			</div>
 			
-			{{ Form::password('password_conf', array('class' => 'form-control', 'placeholder' => 'Confirm Password', 'autofocus')) }}
+			<div class="input-group margin-bottom-sm">
+				<span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+				{{ Form::password('password_conf', array('class' => 'form-control', 'placeholder' => 'Confirm Password', 'autofocus')) }}
+			</div>
 
-			{{ Form::text('city', null, array('class' => 'form-control', 'placeholder' => 'City', 'autofocus')) }}
+			<div class="input-group margin-bottom-sm">
+				<span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
+				{{ Form::text('city', null, array('class' => 'form-control', 'placeholder' => 'City', 'autofocus')) }}
+			</div>
 
-			{{ Form::label('gender', 'Gender: ') }}
-			{{ Form::select('gender', array('m' => 'Male', 'f' => 'Female')) }}
+			<div class="center">
+				{{ Form::label('gender', 'Gender: ') }}
+				{{ Form::select('gender', array('m' => 'Male', 'f' => 'Female'), '', ['class' => 'form-control']) }}
+			</div>
 			
-			{{ Form::submit('Create Account', array('class' => 'btn btn-lg btn-success btn-block')) }}
+			<div class="center">
+				<button class="btn btn-lg btn-success btn-block">
+					<i class="fa fa-flag"></i>
+					{{ Form::submit('Create Account') }}
+				</button>
+			</div>
 
 		{{ Form::close() }}
 	</article>

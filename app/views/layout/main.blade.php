@@ -4,9 +4,10 @@
 		<title>Shelf-Life</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<link href='http://fonts.googleapis.com/css?family=Permanent+Marker|PT+Sans+Narrow|Yanone+Kaffeesatz' rel='stylesheet' type='text/css'>
-		<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+		<link href='http://fonts.googleapis.com/css?family=Permanent+Marker|PT+Sans+Narrow|Yanone+Kaffeesatz|Rock+Salt' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+		<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+		@yield('custom_css')
 		<link rel="stylesheet" href="{{ URL::asset('css/styles.min.css') }}" type="text/css">
 
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->

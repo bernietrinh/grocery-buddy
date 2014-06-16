@@ -40,7 +40,10 @@ class AccountController extends BaseController {
 	}
 
 	public function getUpdateSettings() {
-		return View::make('account.updatesettings');
+		$user = User::find(Auth::user()->id);
+		return View::make('account.updatesettings', array(
+			'user' => $user
+		));
 	}
 
 	public function postUpdateSettings() {
@@ -63,7 +66,7 @@ class AccountController extends BaseController {
 				$user->password = Hash::make($new_password);
 
 				if($user->save()) {
-					return Redirect::route('home')->with('global', '<p class="alert alert-success">Settings have been updated.</p>');
+					return Redirect::route('profile')->with('global', '<p class="alert alert-success">Settings have been updated.</p>');
 				}
 			} else {
 				return Redirect::route('account-update-settings')->with('global', '<p class="alert alert-danger">The password you entered is incorrect.</p>');

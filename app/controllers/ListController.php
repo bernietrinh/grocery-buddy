@@ -5,17 +5,23 @@ Class ListController extends BaseController {
 	public function getList() {
 		$list_items = Auth::user()->smartLists;
 
-		foreach ($list_items as $list) {
-
-			$item = SmartList::joinListAndItems($list['item_id'], Auth::user()->id);
-			if ($item) {
-				$items[] = $item; 
+		foreach($list_items as $list) {
+			$shelf = Auth::user()->listWithShelf($list->item_id);
+			if ($shelf) {
+				$items[] = $shelf;
 			} else {
-				$item = Item::find($list['item_id']);
-				$items[] = $item; 
+				$items[] = $list;
 			}
+
 		}
-		
+
+		foreach($items as $list) {
+			json_decode($list);
+			// echo '<pre>';
+			// echo $list->name;
+			// echo '</pre>';
+		}
+
 		return View::make('list', array(
 			'items' => $items
 		));
@@ -25,22 +31,19 @@ Class ListController extends BaseController {
 		$user = Auth::user()->id;
 		$item_id = Input::get('item'); 
 
-		if (Input::has('list_remove')) {
-
-			//delete from grocery list
-			$delete = SmartList::where('user_id', '=', $user)->where('item_id', '=', $item_id)->delete();
-
-			
-			if ($delete) {
-				return Redirect::route('smart-list')->with('global', 'item sucessfully removed');
-			}
-
-		} else if (Input::has('add_to_shelf')) {
+		if (Input::has('add_to_shelf')) {
 			//add to shelf
 			$messages = array(
 				'purchase.before' => "the purchase date must be on or before today's date.",
 				'expiry.after' => "the expiry date must be later than today's date."
 			);
+
+			if (Input::has('perishable')) {
+				$expiry_val = 'required|date:after'.date("Y-m-d", time());
+			} else {
+				$expiry_val = '';
+			}
+
 			$validator = Validator::make(Input::all(), array(
 				'purchase' => 'required|date|before:'.date("Y-m-d", time() + (24 * 60 * 60)),
 				'expiry' => 'required|date|after:'.date("Y-m-d", time()),
@@ -74,14 +77,18 @@ Class ListController extends BaseController {
 					'location' => $location,
 					'price' => $price,
 					'description' => $description,
-					'sale' => $sale
+					'sale' => $sale,
+					'expired' => 0
 				));
 
 				if($addToShelf) {
-					$remove = SmartList::where('user_id', '=', $user)->where('item_id', '=', $item_id)->delete();
+					$list_item = SmartList::find(Input::get('list_id_add_del'));
+					$remove = $list_item->delete();
 
 					if($remove) {
-						return Redirect::route('smart-list')->with('global', "item has been added to your shelf");
+						return Redirect::route('smart-list')->with('global', '<p class="alert alert-success">item has been added to your shelf.');
+					} else {
+						return Redirect::route('smart-list')->with('global', '<p class="alert alert-danger">there was a problem removing this item.</p>');
 					}
 				}
 			}
@@ -101,16 +108,35 @@ Class ListController extends BaseController {
 				//validation errors
 				return Redirect::route('smart-list')->withErrors($validator)->withInput();
 			} else {
-				$item_id = Input::get('listitemid');
+				if (Input::has('listitemid')) {
+					$item_id = Input::get('listitemid');
+				} else {
+					$item = Item::where('name',Input::get('addtolist'))->first();
+					$item_id = $item->id;
+				}
 
 				$addToList = SmartList::create(array(
-					'user_id' => $user,
+					'user_id' => Auth::user()->id,
 					'item_id' => $item_id
 				));
 
-				return Redirect::route('smart-list')->with('global', 'successfully added to smart list');
+				return Redirect::route('smart-list')->with('global', '<p class="alert alert-success">successfully added to smart list.</p>');
 			}
 		}
+	}
+
+	public function postDelete() {
+
+		$list_item = SmartList::find(Input::get('list_id_delete'));
+
+		$delete = $list_item->delete();
+
+		if ($delete) {
+			return Redirect::route('smart-list')->with('global', '<p class="alert alert-success">item sucessfully removed.</p>');
+		} else {
+			return Redirect::route('smart-list')->with('global', '<p class="alert alert-danger">there was a problem removing this item.</p>');
+		}
+
 	}
 
 	public function getAdd() {

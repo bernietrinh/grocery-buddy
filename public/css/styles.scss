@@ -1,7 +1,6 @@
 @import 'reset';
 @import 'bootstrap.min';
 @import 'bootstrap-theme.min';
-@import 'onepage-scroll.scss';
 
 @mixin white-shadow() {
 	-moz-text-shadow: 2px 2px 2px rgba(255, 255, 255, 1);
@@ -10,31 +9,48 @@
 	text-shadow: 2px 2px 2px rgba(255, 255, 255, 1);
 }
 
+@mixin box-shadow($opacity) {
+	-webkit-box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, $opacity);
+	-moz-box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, $opacity);
+	box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, $opacity);
+}
+
+@mixin border-radius($radius) {
+	-webkit-border-radius: $radius;
+	-moz-border-radius: $radius;
+	-o-border-radius: $radius;
+	border-radius: $radius;
+}
+
 $marker: 'Permanent Marker', cursive;
 $pt: 'PT Sans Narrow', sans-serif;
 $yanone: 'Yanone Kaffeesatz', sans-serif;
+$rock: 'Rock Salt', cursive;
 
 $main-orange: #ff530d;
 $light-orange: #e3b34a;
 $grey-green: #9fada2;
 
 body {
-	background: $light-orange;
-	overflow: auto;
+	background: #ecdfc3;
+	// overflow: auto;
 }
 	
 //Validation
+//dark red
+$error: #a94442;
 .alert {
 	padding: 10px;
 	margin-bottom:5px;
 }
 
-
 /*_____________________Home Page________________________*/
 #home {
+	padding: 0;
 	background: url('../img/background.jpg') top center no-repeat fixed;
 	background-size: 100% 100%;
 	text-align: center;
+	width: 100%;
 	
 	h3 {
 		font-family: $marker;
@@ -61,7 +77,6 @@ body {
 	}
 	
 	input:not([type=checkbox]) {
-		text-align: center;
 		// margin: .5em 0 .5em 0;
 	}
 
@@ -74,7 +89,19 @@ body {
 		background: url('../img/homelogo.png') top center no-repeat;
 
 		img {
-			width: 20em;
+			width: 15em;
+		}
+
+		input[type=submit] {
+			display: inline;
+			// width: 90%;
+		}
+		i {
+			display:inline;
+		}
+
+		button {
+			width:80%;
 		}
 	}
 
@@ -168,19 +195,26 @@ body {
 			font-size: 3em;
 			padding-top: 1em;
 		}
+		button {
+			margin-top: 1em;
+		}
 	}
 }
 
 /*_____________________Create Page________________________*/
 #create {
+	background: $light-orange;
 	h3 {
 		font-family: $marker;
 		font-size: 3em;
 		padding: .5em;
+		text-align: center;
 	}
 
-	max-width: 390px;
-	text-align: center;
+	.container {
+		max-width: 390px;
+		margin: 0 auto;
+	}
 
 	input[type=text],
 	input[type=email],
@@ -190,6 +224,10 @@ body {
 
 	label {
 		margin: .5em 0 .5em;
+	}
+
+	button {
+		margin-top: 1em;
 	}
 }
 /*_____________________Profile Nav________________________*/
@@ -218,20 +256,99 @@ nav {
 
 /*_____________________Profile Page________________________*/
 #profile {
+	padding: 5em 3em 2em 3em;
+
+	h2 {
+		font-family: $marker;
+	}
+
+	table {
+		thead {
+			font-weight: bold;
+			font-size: 1.2em;
+		}
+		tr td:first-child {
+			font-weight: bold;	
+		}
+	}
+
+	ul {
+		li {
+			margin-top: 0.3em;
+
+			span {
+				color: $light-orange;
+				font-style: italic;
+			}
+		}
+		a {
+			font-family: $rock;
+			font-size: 1em;
+			margin: 0 .1em 0 .1em;
+			color:$main-orange;
+		}
+	}
+
+
+
+}
+
+/*_____________________Update Settings_____________________*/
+#update-settings {
 	padding: 5em 0 2em;
-	background: #e4e4e4;
+	background: $light-orange;
 
 	.container {
 		max-width: 390px;
 		margin: 0 auto;
+	}
+
+	form {
+		h3 {
+			text-align: center;
+			font-family: $marker;
+		}
+
+		width: 300px;
+		margin: 0 auto;
+		background: #FFFFFF;
+		@include box-shadow(.7);
+		padding: 1.5em;
+
+		i {
+			vertical-align: middle;
+		}
+
+		button {
+			width: 50%;
+			margin: 1em auto;
+
+		}
+		label {
+			margin-top: .5em;
+		}
 	}
 }
 
 /*_____________________Shelf Index________________________*/
 #shelf_index {
 	padding: 5em 0 2em;
-	background: #e4e4e4;
 	
+	.panel-heading {
+		padding-left: 2em;
+		img {
+			height: 30px;
+			margin-right: .5em;
+			display:inline;
+			vertical-align: middle;
+		}
+		
+		
+		h3 {
+			display: inline;
+		}
+	}
+
 	.label {
 		width: 60%;
 		padding:12px;
@@ -254,10 +371,9 @@ nav {
 	.listgroup>a:first-child {
 		margin: .5em;
 	}
-	.expires,
-	span {
+	.expires {
 		font-size: .8em;
-		margin: .1em 0 0 4em;
+		margin: .1em 0 0 2em;
 		display: block;
 	}
 	button, 
@@ -265,19 +381,264 @@ nav {
 		float:right;
 	}
 
-	.edit {
-		padding-top: 4px;
-		padding-bottom: 3px;
-		margin-right: .5em;
+	
+}
 
-		i {
-			margin-right: 3px;
-		}
-	}
+input[type=submit] {
+	background: none;
+	border: none;
+}
+.edit {
+	padding-top: 4px;
+	padding-bottom: 3px;
+	margin-right: .5em;
 
-	.remove {
-		background: none;
-		border: none;
+	i {
+		margin-right: 3px;
 	}
 }
 
+/*_____________________Shelf Details________________________*/
+#shelf_details {
+	padding: 5em 0 2em;
+
+	.panel-heading {
+		padding-left: 2em;
+		img {
+			height: 30px;
+			margin-right: .5em;
+			display:inline;
+			vertical-align: middle;
+		}
+		
+		
+		h3 {
+			display: inline;
+			margin-right: .5em;
+		}
+	}
+
+	.panel-body {
+		p:first-child {
+			text-align: center;
+			font-size: 1.3em;
+			font-weight:bold;
+		}
+
+		p:nth-child(2) {
+			font-family: $pt;
+			font-size: 1.2em;
+			color: $light-orange;
+		}
+
+		span {
+			font-size: 1.2em;
+			font-weight: bold;
+		}
+
+		li {
+			font-style: italic;
+			margin-left: 1em;
+		}
+	}
+
+	.container {
+		max-width: 500px;
+		width:95%;
+		margin: 0 auto;
+	}
+	
+	.panel-footer {
+		background:#FFFFFF;
+		a,
+		button {
+			float:right;
+			margin-right: .5em;
+		}
+	}
+}
+
+/*_____________________Shelf Add________________________*/
+#shelf_add, #shelf_edit {
+	h3 {
+		text-align: center;	
+		font-family: $marker;
+		font-size: 1.5em;
+	}
+	padding: 5em 0 2em;
+	background: $light-orange;
+
+	.container {
+		max-width: 500px;
+		margin: 0 auto;
+	}
+
+	form {
+		background: #FFFFFF;
+		padding: 2em;
+		@include border-radius(3px);
+		// text-align: center;	
+		margin: 0 auto;
+		width: 95%;
+		@include box-shadow(.7);
+
+
+	}
+	.input-group {
+		margin: 0 auto;
+		width: 90%;
+	}
+	.form-group {
+		text-align: left;
+	}
+	
+	label[for=expiry],
+	label[for=purchase] {
+		margin-left: 1.3em;
+	}
+
+	button {
+		width: 100%;
+		i {
+			vertical-align: middle;
+		}
+	}
+
+	 label {
+	 	margin-top: .7em;
+	 }
+
+	select:last-child {
+		margin-bottom: 1em;
+	}
+
+
+}
+
+.center {
+	text-align: center;
+}
+
+.ui-widget {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	input {
+		font-size: 14px;	
+		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	}
+}
+
+/*_____________________List________________________*/
+#list {
+	padding: 5em 0 2em;
+		max-width: 500px;
+		margin: 0 auto;
+	
+	.container {
+		max-width: 390px;
+		margin: 0 auto;
+
+		h3 {
+			font-family: $marker;
+		}
+	}
+	
+	.ui-widget {
+		width: 370px;
+		margin: 0 auto;
+		background: $light-orange;
+		padding: 1em;
+		@include border-radius(4px);
+		@include box-shadow(0.6);
+
+
+	}
+	form:first-child {
+		.addtolist {
+			float: left;
+			width: 260px;
+		}
+
+		>i {
+			float: right;
+		}
+	}
+
+	#validation {
+		margin-top: 1.5em;
+		li {
+			color: $error;
+			font-style: italic;
+		}
+	}
+
+	#panel-title {
+		background: #efefef;
+		margin-top: 1.5em;
+		padding: 1em;
+		@include border-radius(3px);
+		text-align: center;
+	}
+
+	i {
+		vertical-align: middle;
+	}
+	.toggle {
+		cursor: pointer;
+	}
+
+	.list-group-item header {
+		button {
+			margin-right: .2em;
+		}
+		.remove {
+			float: right;
+		}
+
+		h4 {
+			font-size: 1em;
+		}
+		button,
+		h4,
+		form {
+			display: inline;
+		}
+
+		h4:not(.toggle) {
+			margin-left: 1em;
+		}
+	}
+
+	article {
+		ul {
+			margin: 1em 0 0 0;
+		}
+		li {
+			font-size: .9em;
+			margin-left: 4em;
+			font-style: italic;
+
+			span {
+				font-weight: bold;
+				color: $error;
+			}
+		}
+	}
+
+	section {
+		form {
+
+			button {
+				width: 80%;
+				margin: 0 auto;
+			}
+
+			 label {
+			 	margin-top: .7em;
+			 }
+
+			select:last-child {
+				margin-bottom: 1em;
+			}
+		}
+	}
+}

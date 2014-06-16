@@ -29,10 +29,16 @@ class ShelfController extends BaseController {
 		);
 
 		//validation
+		if (Input::has('perishable')) {
+			$expiry_val = 'required|date:after'.date("Y-m-d", time());
+		} else {
+			$expiry_val = '';
+		}
+
 		$validator = Validator::make(Input::all(), array(
 			'item_name' => 'required|exists:items,name',
 			'purchase' => 'required|date:before'.date("Y-m-d", time()+ (24 * 60 * 60)),
-			'expiry' => 'required|date:after'.date("Y-m-d", time()),
+			'expiry' => $expiry_val,
 			'brand' => 'min:2',
 			'price' => 'required|numeric'
 		), $messages);
@@ -46,7 +52,7 @@ class ShelfController extends BaseController {
 			$item_id = Input::get('item_id');
 			$place = Input::get('place');
 			$purchase = Input::get('purchase');
-			$expiry = Input::get('expiry');
+			$expiry = (Input::has('expiry')) ? Input::get('expiry') : null;
 			$brand = (Input::has('brand')) ? Input::get('brand') : 'N/A';
 			$quantity = Input::get('quantity');
 			$location = (Input::has('location')) ? Input::get('location') : 'N/A';
@@ -66,7 +72,8 @@ class ShelfController extends BaseController {
 				'location' => $location,
 				'price' => $price,
 				'description' => $desc,
-				'sale' => $sale
+				'sale' => $sale,
+				'expired' => 0
 			));
 
 			if ($addToShelf) {
@@ -89,6 +96,7 @@ class ShelfController extends BaseController {
 	}
 
 	public function getEditShelf($id) {
+
 		$item = Shelf::getItem($id);
 
 		if ($item->user_id != Auth::user()->id) {
@@ -100,6 +108,12 @@ class ShelfController extends BaseController {
 	}
 
 	public function postEditShelf() {
+		if (Input::has('perishable')) {
+			$expiry_val = 'required|date:after'.date("Y-m-d", time());
+		} else {
+			$expiry_val = '';
+		}
+
 		//custom validaiton messages
 		$messages = array(
 			'purchase.before' => "the purchase date must be before today's date",
@@ -109,14 +123,14 @@ class ShelfController extends BaseController {
 		//validation
 		$validator = Validator::make(Input::all(), array(
 			'purchase' => 'required|date:before'.date("Y-m-d", time()),
-			'expiry' => 'required|date:after'.date("Y-m-d", time()),
+			'expiry' => $expiry_val,
 			'brand' => 'min:2',
 			'price' => 'required|numeric'
 		));
 
 		//redirect with errors
 		if($validator->fails()) {
-			return Redirect::route('shelf-edit')->withErrors($validator)->withInput();
+			return Redirect::route('shelf-edit', Input::get('shelf_id'))->withErrors($validator)->withInput();
 		} else {
 			//add to shelf table
 			$item = Shelf::find(Input::get('shelf_id'));
@@ -136,7 +150,7 @@ class ShelfController extends BaseController {
 			$editShelfItem = $item->save();
 
 			if ($editShelfItem) {
-				return Redirect::route('shelf')->with('global', 'item has been updated.');
+				return Redirect::route('shelf')->with('global', '<p class="alert alert-success">item has been updated.</p>');
 			} else {
 				return Redirect::route('shelf-edit')->with('global', '<p class="alert alert-success">there was a problem updating this item.</p>');
 			}
@@ -146,7 +160,10 @@ class ShelfController extends BaseController {
 
 	public function postDeleteShelf() {
 		$item = Shelf::find(Input::get('shelf_id'));
-		$deleted = $item->delete();
+
+		$item->expired = 1;
+
+		$deleted = $item->save();
 
 		if($deleted) {
 			return Redirect::route('shelf')->with('global', '<p class="alert alert-success">item removed.</p>');
